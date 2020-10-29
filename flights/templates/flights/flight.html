@@ -1,31 +1,37 @@
 {% extends "flights/layout.html" %} {%block body%}
-<h1>Flight: {{flight.id}}</h1>
-<ul>
-  <li>Origin: {{ flight.origin }}</li>
-  <li>Destination: {{ flight.destination }}</li>
-  <li>Duration: {{ flight.duration }}</li>
-</ul>
-<h2>Passengers</h2>
-<ol>
-  {% for passenger in passengers %}
-  <li>Name: {{passenger}}</li>
-  {% empty %}
-  <li>No passenger</li>
-  {% endfor%}
-</ol>
+<div class="container">
+  <h1>Flight: {{flight.id}}</h1>
+  <ul class="card">
+    <li><strong>Origin:</strong> {{ flight.origin }}</li>
+    <li><strong>Destination:</strong> {{ flight.destination }}</li>
+    <li><strong>Duration:</strong> {{ flight.duration }}</li>
+  </ul>
+  <h2>Passengers👨‍👧‍👧</h2>
+  <ol class="card">
+    {%if passengers %} {% for passenger in passengers %}
+    <li>Name: {{passenger}}</li>
+    {% endfor%} {%else %} <p>No passenger</p> {%endif %}
+  </ol>
 
-<h2>Book Flight</h2>
-<form action="{% url 'book' flight.id %}" method="post">
-  {% csrf_token %}
-  <select name="passenger">
-    {% for passenger in non_passengers %}
-    <option value="{{ passenger.id }}">{{passenger}}</option>
-    {% empty %}
-    <option value="" disabled>All passengers got flights</option>
-    {%endfor%}
-  </select>
-  <input type="submit">
-</form>
+  <h2>Book Flight</h2>
+  <div class="card text-center">
+    {% if non_passengers %}
+    <form action="{% url 'book' flight.id %}" method="post">
+      {% csrf_token %}
+      <select name="passenger">
+        {% for passenger in non_passengers %}
+        <option value="{{ passenger.id }}">{{passenger}}</option>
+        {%endfor%}
+      </select>
+      <input type="submit" class="button" />
+    </form>
+    {% else %}
+    <p>All passengers got flights!</p>
+    {% endif %}
+  </div>
 
-<a href="{% url 'index' %}">View all flights</a>
+  <a href="{% url 'index' %}" style="text-decoration: underline;"
+    >View all flights</a
+  >
+</div>
 {%endblock%}

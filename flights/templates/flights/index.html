@@ -1,13 +1,16 @@
-{% extends "flights/layout.html" %} 
-{% block body %}
-<h1>All flights</h1>
-<ul>
-  {% for flight in flights %} 
-  <a href="{% url 'flight' flight.id %}">
-    <li>Flight {{ flight.id}}: {{ flight.origin }} to {{ flight.destination }}</li>
-  </a>
-  {% empty %}
-  <li>No flight</li>
-  {% endfor %}
-</ul>
+{% extends "flights/layout.html" %} {% block body %}
+<div class="container">
+  <h1>All flights✈️</h1>
+  <ul>
+    {% for flight in flights %}
+    <a href="{% url 'flight' flight.id %}">
+      <li class="card card-hover-to-scale">
+        <strong>Flight {{ flight.id}}:</strong> {{ flight.origin }} to {{ flight.destination }}
+      </li>
+    </a>
+    {% empty %}
+    <li>No flight</li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}
